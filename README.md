@@ -1,3 +1,18 @@
+# ToDo React List (Advanced Version)
+
+Desarrollar con React una aplicación frontend (sin capa de servidor ni base de datos) que cumpla los siguientes requisitos:
+
+1- Mostrar una lista de tareas, cada una de ellas con texto y un checkbox para indicar si ha sido realizada o no.
+2- Un campo de texto filtrador que limite las tareas que aparecen según lo que contenga (escrito por el usuario).
+3- En cada tarea, al pinchar sobre ella o sobre el checkbox, alternará su estado entre "Realizada" (checkbox marcado y texto de la tarea tachada) o "No realizada" (checkbox desmarcado y texto de la tarea normal).
+4- Añadir en cada tarea un botón de "Eliminar" que al pulsarlo destruirá la tarea.
+5- Añadir a todo el listado un nuevo botón de "Nueva" tarea que mostrará una vista totalmente distinta, con un campo de texto para el texto de la tarea, y dos botones, uno para "Guardar" la tarea (que nacerá como "No realizada") y otro de "Volver" atrás.
+Ambos botones llevarán al usuario al listado anterior, pero en el caso del primero se creará una tarea nueva, y en el caso del segundo, no.
+6- Añadir en cada tarea un botón de "Editar" tarea, de manera que al pincharlo aparezca la misma vista de crear nueva tarea, solo que en el campo de texto, este estará prerrellenado con el texto de la tarea, y al pinchar en el botón de Guardar, no creará una nueva, sino que la actualizará.
+7- Añadir un campo nuevo de "Prioridad" para todas las tareas, que será un select de dos opciones: Alta y Baja. Dicho campo será editable únicamente desde el listado, no desde la vista de Editar tarea. Toda tarea nueva nacerá con prioridad Baja.
+8- En el listado, las tareas con prioridad Alta deben aparecer con fondo rojo y las de prioridad Baja con fondo verde.
+9- En el listado, cuando el usuario cambie la prioridad de una tarea a Alta (es decir, siendo Baja previamente) el resto de tareas cambiarán a Baja (si no lo estaban ya).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
