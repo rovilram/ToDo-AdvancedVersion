@@ -6,30 +6,46 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      tareas: '',
+      title: '',
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      title: this.props.task ? this.props.task.title : '',
+      id: this.props.task ? this.props.task.id : '',
+      done: this.props.task ? this.props.task.done : '',
+      priority: this.props.task ? this.props.task.priority : '',
+    });
   }
 
   formSubmit = (e) => {
     e.preventDefault();
-    //const task = e.target.newTaskText.value;
-    console.log("ESTADO",this.state)
-    this.props.addNewTask(this.state.tareas);
+    this.props.formSubmit(this.state);
   };
 
   handleTitle = (e) => {
-    console.log("INPUT",e.target.value)
-    this.setState(() => ({
-      tareas: e.target.value,
-    }));
+    this.setState({ title: e.target.value });
   };
-
   render() {
     return (
-      <form onSubmit={(e) => this.formSubmit(e)}>
-        <input type="text" onChange={this.handleTitle} />
-        <input type="submit" value="Añadir Tarea" />
-      </form>
+      <div className="formWrapper">
+        <form onSubmit={(e) => this.formSubmit(e)}>
+          <input
+            className="taskText"
+            type="text"
+            defaultValue={this.state.title}
+            onChange={this.handleTitle}
+          />
+          <input className="okBtn" type="submit" value={this.props.text} />
+          <input
+            className="koBtn"
+            type="button"
+            value="Cancelar"
+            onClick={this.props.clearAction}
+          />
+        </form>
+      </div>
     );
   }
 }
