@@ -17,7 +17,7 @@ class Task extends React.Component {
       transform: `rotate(${Math.random() * 5 - 2.5}deg)`,
     };
   }
-
+  
   checkboxHandler = () => {
     this.props.setDoneTask(this.state.id);
   };

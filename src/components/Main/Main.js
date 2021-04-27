@@ -14,6 +14,8 @@ class Main extends React.Component {
       filter: '',
       tasks: [],
       edit: '',
+      user: '',
+      pass: '',
     };
   }
 
@@ -26,7 +28,7 @@ class Main extends React.Component {
     });
   }
 
-  componentDidUpdate() {  
+  componentDidUpdate() {
     setTasks(this.state.tasks);
     console.log('ACTUALIZANDO', getTasks());
   }
@@ -98,7 +100,7 @@ class Main extends React.Component {
   };
 
   drawTasks = (tasks) => {
-    console.log("TASKS", tasks)
+    console.log('TASKS', tasks);
     let tasksArray = [];
     if (tasks.length !== 0) {
       tasksArray = tasks
@@ -124,16 +126,36 @@ class Main extends React.Component {
     } else return <div className="errorNoTasks">NO HAY TAREAS</div>;
   };
 
+  userHandler = (e) => {
+    this.setState({ user: e.target.value });
+  };
+
+  passHandler = (e) => {
+    this.setState({ pass: e.target.value });
+  };
+
+  logBtnHandler = () => {
+    if (this.state.user === 'admin' && this.state.pass === 'admin1234') {
+      this.setState({user:"", pass:""})
+      console.log('LOGGED!!!!!!!');
+      this.props.setLog();
+    } else console.log('USUARIO Y CONTRASEÑA INCORRECTOS');
+  };
+
+  cancelBtnHandler = () => {
+    this.props.delLoginAction()
+  }
+
   render() {
     return (
       <main>
         <div className="wrapper">
-          {this.state.action === '' ? (
+          {!this.props.action && this.state.action === '' ? (
             <Search searchTask={this.searchTask} />
           ) : (
             ''
           )}
-          {this.state.action === 'add' ? (
+          {!this.props.action && this.state.action === 'add' ? (
             <Form
               formSubmit={this.addTask}
               clearAction={this.clearAction}
@@ -142,7 +164,7 @@ class Main extends React.Component {
           ) : (
             ''
           )}
-          {this.state.action === 'edit' ? (
+          {!this.props.action && this.state.action === 'edit' ? (
             <Form
               formSubmit={this.editTask}
               clearAction={this.clearAction}
@@ -156,27 +178,35 @@ class Main extends React.Component {
           ) : (
             ''
           )}
-          {this.state.action === '' && this.props.logged && (
+          {!this.props.action && this.state.action === '' && this.props.logged && (
             <div className="addBtnWrapper">
               <button onClick={this.actionAdd}>Añadir</button>
             </div>
           )}
-          {this.state.action === '' ? (
+          {!this.props.action && this.state.action === '' ? (
             <div className="taskWrapper">
               <ul className="tasks">{this.drawTasks(this.state.tasks)}</ul>
             </div>
           ) : (
             ''
           )}
-          {
-            this.state.action ==="login" && (
-              <div className="login">VAMOS A LOGEARNOS, ¿NO?</div>
-            )
-          }
+          {this.props.action === 'login' && (
+            <>
+              <h2>LOGIN</h2>
+              <div className="loginWrapper">
+                <label htmlFor="userInput">Usuario: </label>
+                <input type="text" id="userInput" onChange={this.userHandler} />
+                <br />
+                <label htmlFor="passInput">Contraseña: </label>
+                <input type="text" id="passInput" onChange={this.passHandler} />
+                <button onClick={this.logBtnHandler}>Enviar</button>
+                <button onClick={this.cancelBtnHandler}>Cancelar</button>
+              </div>
+            </>
+          )}
         </div>
       </main>
     );
   }
 }
-
 export default Main;

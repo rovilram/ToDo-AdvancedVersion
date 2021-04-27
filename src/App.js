@@ -10,14 +10,34 @@ function App() {
   const [action, setAction] = useState('');
 
   const actionLogin = () => {
-    setAction('login');
+    if (logged) setLogged(false);
+    else {
+      setAction('login');
+    }
+    //setLogged(!logged);
+  };
+
+  const delLoginAction = () => {
+    setAction('');
+  };
+
+  const setLog = () => {
+    setAction('');
+    setLogged(true);
+
+    console.log('LOGADO', action, logged);
   };
 
   return (
     <div className="App">
       <LoggedProvider value={logged}>
-        <Header actionLogin={actionLogin} />
-        <Main action={action} logged={true} />
+        <Header actionLogin={actionLogin} logged={logged} />
+        <Main
+          action={action}
+          logged={logged}
+          setLog={setLog}
+          delLoginAction={delLoginAction}
+        />
         <Footer />
       </LoggedProvider>
     </div>

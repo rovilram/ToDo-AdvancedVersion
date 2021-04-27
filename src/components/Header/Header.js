@@ -10,7 +10,7 @@ class Header extends React.Component {
     return (
       <header>
         <h1>ToDo List</h1>
-        <button onClick={this.logHandler}>LOGEAR</button>
+        <button onClick={this.logHandler}>{this.props.logged ? "DESLOGUEAR" : "LOGUEAR"}</button>
       </header>
     );
   }
