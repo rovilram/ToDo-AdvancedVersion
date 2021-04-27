@@ -10,56 +10,25 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      action: '',
+      action: this.props.action,
       filter: '',
-      tasks: [
-        /* {
-          id: 0,
-          title: 'probando',
-          done: true,
-          priority: 'alta',
-        },
-        {
-          id: 1,
-          title: 'probando 1',
-          done: false,
-          priority: 'baja',
-        },
-        {
-          id: 2,
-          title: 'probando 2',
-          done: false,
-          priority: 'baja',
-        },
-        {
-          id: 3,
-          title: 'probando 3',
-          done: false,
-          priority: 'baja',
-        },
-        {
-          id: 4,
-          title: 'probando 4',
-          done: false,
-          priority: 'baja',
-        }, */
-      ],
+      tasks: [],
       edit: '',
     };
   }
 
   componentDidMount() {
     let tasks = getTasks();
+    tasks = tasks ? tasks : [];
     console.log('MONTAJE', tasks);
-    tasks = tasks ? tasks : '[]';
     this.setState({
       tasks: [...this.state.tasks, ...tasks],
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate() {  
     setTasks(this.state.tasks);
-    console.log("ACTUALIZANDO", getTasks())
+    console.log('ACTUALIZANDO', getTasks());
   }
 
   searchTask = (searchText) => {
@@ -129,6 +98,7 @@ class Main extends React.Component {
   };
 
   drawTasks = (tasks) => {
+    console.log("TASKS", tasks)
     let tasksArray = [];
     if (tasks.length !== 0) {
       tasksArray = tasks
@@ -165,12 +135,6 @@ class Main extends React.Component {
           )}
           {this.state.action === 'add' ? (
             <Form
-              /*               task={{
-                id: Date.now(),
-                title: '',
-                done: false,
-                priority: 'baja',
-              }} */
               formSubmit={this.addTask}
               clearAction={this.clearAction}
               text="Añadir Tarea"
@@ -192,20 +156,23 @@ class Main extends React.Component {
           ) : (
             ''
           )}
-          {this.state.action === '' ? (
+          {this.state.action === '' && this.props.logged && (
             <div className="addBtnWrapper">
               <button onClick={this.actionAdd}>Añadir</button>
+            </div>
+          )}
+          {this.state.action === '' ? (
+            <div className="taskWrapper">
+              <ul className="tasks">{this.drawTasks(this.state.tasks)}</ul>
             </div>
           ) : (
             ''
           )}
-          <div className="taskWrapper">
-            {this.state.action === '' ? (
-              <ul className="tasks">{this.drawTasks(this.state.tasks)}</ul>
-            ) : (
-              ''
-            )}
-          </div>
+          {
+            this.state.action ==="login" && (
+              <div className="login">VAMOS A LOGEARNOS, ¿NO?</div>
+            )
+          }
         </div>
       </main>
     );

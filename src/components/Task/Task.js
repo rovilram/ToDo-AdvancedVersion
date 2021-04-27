@@ -1,5 +1,6 @@
 import './Task.css';
 import React from 'react';
+import { LoggedConsumer } from '../../contexts/loggedContext';
 
 class Task extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Task extends React.Component {
       done: props.tarea.done,
     };
 
+    
     this.rot = {
       transform: `rotate(${Math.random() * 5 - 2.5}deg)`,
     };
@@ -32,19 +34,19 @@ class Task extends React.Component {
     this.props.changePriority(e.target.value, this.state.id);
   };
 
-  render() {
+  drawCheckbox = () => {
     return (
-      <li style={this.rot} className={`${this.props.tarea.priority} task`}>
-        <input
-          type="checkbox"
-          checked={this.props.tarea.done}
-          onChange={this.checkboxHandler}
-        ></input>
-        <div className="titleWrapper">
-          <p className={this.props.tarea.done ? 'done' : ''}>
-            {this.props.tarea.title}
-          </p>
-        </div>
+      <input
+        type="checkbox"
+        checked={this.props.tarea.done}
+        onChange={this.checkboxHandler}
+      ></input>
+    );
+  };
+
+  drawButtons = () => {
+    return (
+      <>
         <div className="seletWrapper">
           <select
             name="select"
@@ -59,6 +61,27 @@ class Task extends React.Component {
           <button onClick={this.editClickHandler}>Editar</button>
           <button onClick={this.delClickHandler}>Eliminar</button>
         </div>
+      </>
+    );
+  };
+
+  render() {
+    return (
+      <li style={this.rot} className={`${this.props.tarea.priority} task`}>
+        <LoggedConsumer>
+          {(contexts) => contexts && this.drawCheckbox()}
+        </LoggedConsumer>
+
+        <div className="titleWrapper">
+          <p className={this.props.tarea.done ? 'done' : ''}>
+            {this.props.tarea.title}
+          </p>
+        </div>
+        <LoggedConsumer>
+          {(contexts) => {
+            return contexts && this.drawButtons();
+          }}
+        </LoggedConsumer>
       </li>
     );
   }
